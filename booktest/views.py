@@ -1,6 +1,6 @@
 #coding=utf-8
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render,redirect
+from django.http import HttpResponse,HttpResponseRedirect
 from django.template import RequestContext, loader
 
 
@@ -46,3 +46,19 @@ def postTets2(request):
                'uhobby':uhobby,
                }
     return render(request,'booktest/postTest2.html',context)
+
+def cookieTest(request):
+    response = HttpResponse()
+    cookie = request.COOKIES
+    if cookie.has_key('t1'):
+        response.write(cookie['t1'])
+    else:
+        response.set_cookie('t1','abc')
+    return response
+
+def redTest1(request):
+    # return HttpResponseRedirect('/booktest/redTest2/')
+    return redirect('/booktest/redTest2/')
+
+def redTest2(request):
+    return HttpResponse('这是转向来的页面！')
